@@ -1,28 +1,38 @@
-const offers = [
-  {
-    id: 1,
-    name: 'Arroz 5kg',
-    oldPrice: 'R$ 32,90',
-    promoPrice: 'R$ 27,90',
-    category: 'Alimentos',
-  },
-  {
-    id: 2,
-    name: 'Feijão 1kg',
-    oldPrice: 'R$ 9,90',
-    promoPrice: 'R$ 7,99',
-    category: 'Alimentos',
-  },
-  {
-    id: 3,
-    name: 'Óleo de soja',
-    oldPrice: 'R$ 8,49',
-    promoPrice: 'R$ 6,99',
-    category: 'Cozinha',
-  },
-];
+import { useEffect, useState } from 'react';
+
+import { getActiveOffers } from '../../services/offersService';
 
 function OffersSection() {
+  const [offers, setOffers] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadActiveOffers();
+  }, []);
+
+  async function loadActiveOffers() {
+    try {
+      setLoading(true);
+      const data = await getActiveOffers();
+      setOffers(data);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function formatPrice(value) {
+    if (!value) {
+      return '-';
+    }
+
+    return Number(value).toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+    });
+  }
+
   return (
     <section id="ofertas" className="section offers">
       <div className="container">
@@ -30,25 +40,47 @@ function OffersSection() {
           <span>Promoções</span>
           <h2>Ofertas em destaque</h2>
           <p>
-            Produtos selecionados para ajudar os clientes a encontrarem as melhores oportunidades.
+            Produtos selecionados para ajudar os clientes a encontrarem as
+            melhores oportunidades.
           </p>
         </div>
 
-        <div className="offers__grid">
-          {offers.map((offer) => (
-            <article className="offer-card" key={offer.id}>
-              <span className="offer-card__category">{offer.category}</span>
-              <h3>{offer.name}</h3>
+        {loading ? (
+          <p>Carregando ofertas...</p>
+        ) : offers.length > 0 ? (
+          <div className="offers__grid">
+            {offers.map((offer) => (
+              <article className="offer-card" key={offer.id}>
+                {offer.image_url && (
+                  <img
+                    src={offer.image_url}
+                    alt={offer.name}
+                    className="offer-card__image"
+                  />
+                )}
 
-              <div className="offer-card__prices">
-                <span className="offer-card__old">{offer.oldPrice}</span>
-                <strong>{offer.promoPrice}</strong>
-              </div>
+                <div className="offer-card__content">
+                  <h3>{offer.name}</h3>
 
-              <button className="button button--primary">Tenho interesse</button>
-            </article>
-          ))}
-        </div>
+                  <div className="offer-card__prices">
+                    {offer.old_price && (
+                      <span className="offer-card__old">
+                        {formatPrice(offer.old_price)}
+                      </span>
+                    )}
+
+                    <strong>{formatPrice(offer.promo_price)}</strong>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        ) : (
+          <div className="empty-offers">
+            <h3>Nenhuma oferta disponível no momento.</h3>
+            <p>Volte em breve para conferir novas promoções.</p>
+          </div>
+        )}
       </div>
     </section>
   );

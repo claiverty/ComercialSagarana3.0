@@ -54,7 +54,7 @@ button {
 .header__logo {
   font-size: 1.2rem;
   font-weight: 800;
-  color: #1f7a3f;
+  color: #df092e;
 }
 
 .header__nav {
@@ -67,13 +67,13 @@ button {
 .header__login {
   padding: 10px 16px;
   border-radius: 999px;
-  background: #1f7a3f;
+  background: #df092e;
   color: #ffffff;
 }
 
 .hero {
   padding: 96px 0;
-  background: linear-gradient(135deg, #f5fff8, #ffffff);
+  background: linear-gradient(135deg, #fff3f5, #ffffff);
 }
 
 .hero__content {
@@ -89,7 +89,7 @@ button {
   display: inline-block;
   margin-bottom: 14px;
   font-weight: 800;
-  color: #1f7a3f;
+  color: #df092e;
 }
 
 .hero h1 {
@@ -125,19 +125,20 @@ button {
 }
 
 .button--primary {
-  background: #1f7a3f;
+  background: #df092e;
   color: #ffffff;
 }
 
 .button--secondary {
-  background: #f4c430;
-  color: #1f1f1f;
+  background: #fbfbfb;
+  color: #df092e;
+  border: 1px solid #df556c;
 }
 
 .hero__card {
   padding: 32px;
   border-radius: 28px;
-  background: #1f7a3f;
+  background: #df092e;
   color: #ffffff;
   box-shadow: 0 20px 50px rgba(31, 122, 63, 0.22);
 }
@@ -193,8 +194,8 @@ button {
   margin-bottom: 20px;
   padding: 8px 12px;
   border-radius: 999px;
-  background: #f5fff8;
-  color: #1f7a3f;
+  background: #fff3f5;
+  color: #df092e;
   font-size: 0.85rem;
   font-weight: 800;
 }
@@ -218,7 +219,7 @@ button {
 
 .offer-card strong {
   font-size: 2rem;
-  color: #1f7a3f;
+  color: #df092e;
 }
 
 .location {
@@ -235,10 +236,10 @@ button {
 .location__map {
   min-height: 320px;
   border-radius: 28px;
-  background: #eef5f0;
+  background: #fff3f5;
   display: grid;
   place-items: center;
-  color: #1f7a3f;
+  color: #df092e;
   font-weight: 800;
 }
 
@@ -290,7 +291,7 @@ button {
 .dashboard-sidebar {
   height: 100vh;
   padding: 28px;
-  background: #1f7a3f;
+  background: #df092e;
   color: #ffffff;
   display: flex;
   flex-direction: column;
@@ -349,7 +350,7 @@ button {
   display: inline-block;
   margin-bottom: 8px;
   font-weight: 800;
-  color: #1f7a3f;
+  color: #df092e;
 }
 
 .dashboard-page__header h1 {
@@ -391,7 +392,7 @@ button {
   display: block;
   margin-bottom: 10px;
   font-size: 2rem;
-  color: #1f7a3f;
+  color: #df092e;
 }
 
 .stat-card p {
@@ -456,7 +457,7 @@ button {
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
-  border-color: #1f7a3f;
+  border-color: #df092e;
 }
 
 .dashboard-table {
@@ -484,8 +485,8 @@ button {
   display: inline-flex;
   padding: 6px 10px;
   border-radius: 999px;
-  background: #f0fff5;
-  color: #1f7a3f;
+  background: #fff3f5;
+  color: #df092e;
   font-size: 0.85rem;
   font-weight: 800;
 }
@@ -493,7 +494,7 @@ button {
 .table-action {
   border: 0;
   background: transparent;
-  color: #1f7a3f;
+  color: #df092e;
   font-weight: 800;
 }
 
@@ -507,6 +508,34 @@ button {
   color: #c0392b;
 }
 
+.icon-action {
+  width: 38px;
+  height: 38px;
+  border: 1px solid #ececec;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #df092e;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: 0.2s ease;
+}
+
+.icon-action:hover {
+  background: #fff3f5;
+  border-color: #df092e;
+  transform: translateY(-1px);
+}
+
+.icon-action--danger {
+  color: #c0392b;
+}
+
+.icon-action--danger:hover {
+  background: #fff1f1;
+  border-color: #c0392b;
+}
+
 .sales-accordion {
   display: flex;
   flex-direction: column;
@@ -514,7 +543,7 @@ button {
 }
 
 .sales-year {
-  border: 1px solid #e4ebe6;
+  border: 1px solid #f3d5da;
   border-radius: 18px;
   overflow: hidden;
   background: #ffffff;
@@ -533,8 +562,8 @@ button {
 
 .sales-row--year {
   padding: 18px 20px;
-  background: #f0fff5;
-  color: #1f7a3f;
+  background: #fff3f5;
+  color: #df092e;
   font-size: 1.05rem;
 }
 
@@ -586,6 +615,86 @@ button {
   justify-content: flex-end;
   gap: 14px;
   flex-wrap: wrap;
+}
+
+.financial-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.financial-item {
+  padding: 20px;
+  border-radius: 18px;
+  background: #f8f8f8;
+  border: 1px solid #ececec;
+}
+
+.financial-item span {
+  display: block;
+  margin-bottom: 10px;
+  color: #666;
+  font-weight: 700;
+}
+
+.financial-item strong {
+  font-size: 1.15rem;
+  color: #df092e;
+}
+
+.offer-preview {
+  margin-top: 12px;
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 16px;
+  border: 2px solid #ececec;
+}
+
+.offer-thumb {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.offer-card {
+  overflow: hidden;
+  padding: 0;
+}
+
+.offer-card__image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+}
+
+.offer-card__content {
+  padding: 26px;
+}
+
+.offer-card__content p {
+  margin-bottom: 18px;
+  color: #666;
+  line-height: 1.6;
+}
+
+.empty-offers {
+  padding: 32px;
+  border-radius: 24px;
+  background: #ffffff;
+  border: 1px solid #ececec;
+  text-align: center;
+}
+
+.empty-offers h3 {
+  margin-bottom: 8px;
+  color: #df092e;
+}
+
+.empty-offers p {
+  color: #666;
 }
 
 
@@ -682,5 +791,9 @@ button {
 
   .sales-day-actions {
     justify-content: flex-start;
+  }
+
+  .financial-summary {
+    grid-template-columns: 1fr;
   }
 }
