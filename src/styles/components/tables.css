@@ -1,0 +1,47 @@
+.dashboard-table {
+  overflow-x: auto;
+}
+
+.dashboard-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-table th,
+.dashboard-table td {
+  padding: 16px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border-soft);
+}
+
+.dashboard-table th {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+}
+
+.status-badge {
+  display: inline-flex;
+  padding: 6px 10px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+
+.table-action {
+  border: 0;
+  background: transparent;
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+.table-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.table-action--danger {
+  color: var(--color-danger);
+}

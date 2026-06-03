@@ -1,0 +1,57 @@
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.stat-card {
+  padding: 24px;
+  background: var(--color-white);
+  border: 1px solid var(--color-border-dashboard);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-panel);
+}
+
+.stat-card span {
+  display: block;
+  margin-bottom: 12px;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.stat-card strong {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+
+.stat-card p {
+  color: var(--color-light-muted);
+  line-height: 1.5;
+}
+
+.financial-summary {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.financial-item {
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: #f8f8f8;
+  border: 1px solid var(--color-border);
+}
+
+.financial-item span {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.financial-item strong {
+  font-size: 1.15rem;
+  color: var(--color-primary);
+}

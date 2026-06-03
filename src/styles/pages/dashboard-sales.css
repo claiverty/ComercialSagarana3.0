@@ -1,0 +1,65 @@
+.sales-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.sales-year {
+  border: 1px solid var(--color-border-sales);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.sales-row {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  text-align: left;
+}
+
+.sales-row--year {
+  padding: 18px 20px;
+  background: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: 1.05rem;
+}
+
+.sales-row--month {
+  padding: 16px 20px 16px 44px;
+  background: var(--color-white);
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.sales-row--day {
+  padding: 14px 20px 14px 72px;
+  background: #fafafa;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.sales-row span {
+  font-weight: 800;
+}
+
+.sales-row strong {
+  white-space: nowrap;
+}
+
+.sales-empty {
+  padding: 16px 20px 16px 72px;
+  color: var(--color-light-muted);
+  background: #fafafa;
+  border-top: 1px solid var(--color-border-soft);
+}
+
+.sales-day-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 14px;
+  flex-wrap: wrap;
+}

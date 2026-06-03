@@ -1,0 +1,125 @@
+@media (max-width: 1100px) {
+  .offers__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .offers__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 820px) {
+  .header__content {
+    flex-direction: column;
+    padding: 18px 0;
+    gap: 16px;
+  }
+
+  .header__nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .hero {
+    padding: 64px 0;
+  }
+
+  .hero__content,
+  .location__content {
+    grid-template-columns: 1fr;
+  }
+
+  .footer__content {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .dashboard-layout {
+    height: auto;
+    min-height: 100vh;
+    grid-template-columns: 1fr;
+    overflow: visible;
+  }
+
+  .dashboard-sidebar {
+    height: auto;
+    position: static;
+    gap: 24px;
+  }
+
+  .dashboard-main {
+    height: auto;
+    overflow: visible;
+  }
+}
+
+@media (max-width: 720px) {
+  .dashboard-page__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .stats-grid,
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-main {
+    padding: 20px;
+  }
+
+  .sales-row {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sales-row--month {
+    padding-left: 28px;
+  }
+
+  .sales-row--day,
+  .sales-empty {
+    padding-left: 44px;
+  }
+
+  .sales-row strong {
+    white-space: normal;
+  }
+
+  .sales-day-actions {
+    justify-content: flex-start;
+  }
+
+  .financial-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .offers__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .offer-card {
+    padding: 14px;
+  }
+
+  .offer-card__image {
+    height: 130px;
+  }
+}
+
+@media (max-width: 420px) {
+  .offers__grid {
+    grid-template-columns: 1fr;
+  }
+}
