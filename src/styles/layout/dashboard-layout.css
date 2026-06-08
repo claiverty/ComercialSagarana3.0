@@ -98,3 +98,17 @@
   color: var(--color-muted);
   line-height: 1.7;
 }
+
+.sidebar-logout {
+  width: 100%;
+  min-height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+  font-weight: 700;
+  transition: 0.2s ease;
+}
+
+.sidebar-logout:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

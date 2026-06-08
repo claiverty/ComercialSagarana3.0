@@ -6,6 +6,7 @@ import DashboardLayout from '../components/layout/DashboardLayout';
 import DashboardHome from '../pages/DashboardHome';
 import DashboardOffers from '../pages/DashboardOffers';
 import DashboardSales from '../pages/DashboardSales';
+import PrivateRoute from './PrivateRoute';
 
 function AppRoutes() {
   return (
@@ -13,10 +14,12 @@ function AppRoutes() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
 
-      <Route path="/dashboard" element={<DashboardLayout />}>
-        <Route index element={<DashboardHome />} />
-        <Route path="ofertas" element={<DashboardOffers />} />
-        <Route path="vendas" element={<DashboardSales />} />
+      <Route element={<PrivateRoute />}>
+        <Route path="/dashboard" element={<DashboardLayout />}>
+          <Route index element={<DashboardHome />} />
+          <Route path="ofertas" element={<DashboardOffers />} />
+          <Route path="vendas" element={<DashboardSales />} />
+        </Route>
       </Route>
 
       <Route

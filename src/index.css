@@ -13,5 +13,6 @@
 @import './styles/pages/dashboard-home.css';
 @import './styles/pages/dashboard-offers.css';
 @import './styles/pages/dashboard-sales.css';
+@import './styles/pages/login.css';
 
 @import './styles/responsive.css';
