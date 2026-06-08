@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Eye, EyeOff, Pencil, Trash2 } from 'lucide-react';
 import {
   createOffer,
@@ -25,6 +25,7 @@ function DashboardOffers() {
     description: '',
     imageUrl: '',
   });
+  const formSectionRef = useRef(null);
 
   useEffect(() => {
     loadOffers();
@@ -149,10 +150,12 @@ function DashboardOffers() {
     setImageFile(null);
     setImagePreview(offer.image_url || '');
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    setTimeout(() => {
+      formSectionRef.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }, 100);
   }
 
   function cancelEditOffer() {
@@ -223,7 +226,7 @@ function DashboardOffers() {
         </div>
       </div>
 
-      <section className="dashboard-panel">
+      <section className="dashboard-panel" ref={formSectionRef}>
         <h2>{editingOfferId ? 'Editar oferta' : 'Cadastrar oferta'}</h2>
 
         {editingOfferId && (
