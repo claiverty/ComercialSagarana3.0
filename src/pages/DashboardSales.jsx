@@ -1,13 +1,11 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
-const initialDailySales = [
-  { id: 1, saleDate: '2026-02-01', totalValue: '5987.98' },
-  { id: 2, saleDate: '2026-02-02', totalValue: '4890.90' },
-  { id: 3, saleDate: '2026-02-03', totalValue: '4290.90' },
-  { id: 4, saleDate: '2026-02-04', totalValue: '3611.52' },
-  { id: 5, saleDate: '2026-01-10', totalValue: '12450.90' },
-  { id: 6, saleDate: '2025-03-15', totalValue: '9430.50' },
-];
+import {
+  createDailySale,
+  deleteDailySaleById,
+  getDailySales,
+  updateDailySale,
+} from '../services/dailySalesService';
 
 const monthNames = [
   'Janeiro',
@@ -25,16 +23,43 @@ const monthNames = [
 ];
 
 function DashboardSales() {
-  const [dailySales, setDailySales] = useState(initialDailySales);
+  const [dailySales, setDailySales] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+
   const [expandedYears, setExpandedYears] = useState([]);
   const [expandedMonths, setExpandedMonths] = useState([]);
+  const [editingSaleId, setEditingSaleId] = useState(null);
 
   const [formData, setFormData] = useState({
     saleDate: '',
     totalValue: '',
-  });''
+  });
 
-  const [editingSaleId, setEditingSaleId] = useState(null);
+  useEffect(() => {
+    loadSales();
+  }, []);
+
+  async function loadSales() {
+    try {
+      setLoading(true);
+
+      const sales = await getDailySales();
+
+      const formattedSales = sales.map((sale) => ({
+        id: sale.id,
+        saleDate: sale.sale_date,
+        totalValue: sale.total_value,
+      }));
+
+      setDailySales(formattedSales);
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao carregar vendas.');
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const salesByYear = useMemo(() => {
     const grouped = {};
@@ -57,8 +82,8 @@ function DashboardSales() {
         };
       }
 
-      grouped[year].total += Number(sale.totalValue);
-      grouped[year].months[month].total += Number(sale.totalValue);
+      grouped[year].total += Number(sale.totalValue || 0);
+      grouped[year].months[month].total += Number(sale.totalValue || 0);
       grouped[year].months[month].days.push(sale);
     });
 
@@ -84,53 +109,66 @@ function DashboardSales() {
     }));
   }
 
-  function handleSubmit(event) {
-  event.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
 
-  if (!formData.saleDate || !formData.totalValue) {
-    alert('Preencha a data e o valor total do dia.');
-    return;
-  }
+    if (!formData.saleDate || !formData.totalValue) {
+      alert('Preencha a data e o valor total do dia.');
+      return;
+    }
 
-  const alreadyExists = dailySales.some(
-    (sale) =>
-      sale.saleDate === formData.saleDate && sale.id !== editingSaleId
-  );
-
-  if (alreadyExists) {
-    alert('Já existe uma venda registrada para essa data.');
-    return;
-  }
-
-  if (editingSaleId) {
-    setDailySales((currentSales) =>
-      currentSales.map((sale) =>
-        sale.id === editingSaleId
-          ? {
-              ...sale,
-              saleDate: formData.saleDate,
-              totalValue: formData.totalValue,
-            }
-          : sale
-      )
+    const alreadyExists = dailySales.some(
+      (sale) =>
+        sale.saleDate === formData.saleDate && sale.id !== editingSaleId
     );
 
-    setEditingSaleId(null);
-  } else {
-    const newDailySale = {
-      id: Date.now(),
-      saleDate: formData.saleDate,
-      totalValue: formData.totalValue,
-    };
+    if (alreadyExists) {
+      alert('Já existe uma venda registrada para essa data.');
+      return;
+    }
 
-    setDailySales((currentSales) => [newDailySale, ...currentSales]);
+    try {
+      setSaving(true);
+
+      const salePayload = {
+        sale_date: formData.saleDate,
+        total_value: formData.totalValue,
+      };
+
+      if (editingSaleId) {
+        const updatedSale = await updateDailySale(editingSaleId, salePayload);
+
+        const formattedSale = {
+          id: updatedSale.id,
+          saleDate: updatedSale.sale_date,
+          totalValue: updatedSale.total_value,
+        };
+
+        setDailySales((currentSales) =>
+          currentSales.map((sale) =>
+            sale.id === editingSaleId ? formattedSale : sale
+          )
+        );
+      } else {
+        const createdSale = await createDailySale(salePayload);
+
+        const formattedSale = {
+          id: createdSale.id,
+          saleDate: createdSale.sale_date,
+          totalValue: createdSale.total_value,
+        };
+
+        setDailySales((currentSales) => [formattedSale, ...currentSales]);
+      }
+
+      resetForm();
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao salvar venda diária.');
+    } finally {
+      setSaving(false);
+    }
   }
-
-  setFormData({
-    saleDate: '',
-    totalValue: '',
-  });
-}
 
   function toggleYear(year) {
     setExpandedYears((currentYears) =>
@@ -151,31 +189,43 @@ function DashboardSales() {
   }
 
   function startEditSale(sale) {
-  setEditingSaleId(sale.id);
+    setEditingSaleId(sale.id);
 
-  setFormData({
-    saleDate: sale.saleDate,
-    totalValue: sale.totalValue,
-  });
+    setFormData({
+      saleDate: sale.saleDate,
+      totalValue: sale.totalValue,
+    });
 
-  window.scrollTo({
-    top: 0,
-    behavior: 'smooth',
-  });
-}
-
-function deleteSale(saleId) {
-  const confirmDelete = confirm('Deseja realmente apagar essa venda diária?');
-
-  if (!confirmDelete) {
-    return;
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   }
 
-  setDailySales((currentSales) =>
-    currentSales.filter((sale) => sale.id !== saleId)
-  );
+  async function deleteSale(saleId) {
+    const confirmDelete = confirm('Deseja realmente apagar essa venda diária?');
 
-  if (editingSaleId === saleId) {
+    if (!confirmDelete) {
+      return;
+    }
+
+    try {
+      await deleteDailySaleById(saleId);
+
+      setDailySales((currentSales) =>
+        currentSales.filter((sale) => sale.id !== saleId)
+      );
+
+      if (editingSaleId === saleId) {
+        resetForm();
+      }
+    } catch (error) {
+      console.error(error);
+      alert('Erro ao apagar venda diária.');
+    }
+  }
+
+  function resetForm() {
     setEditingSaleId(null);
 
     setFormData({
@@ -183,16 +233,6 @@ function deleteSale(saleId) {
       totalValue: '',
     });
   }
-}
-
-function cancelEdit() {
-  setEditingSaleId(null);
-
-  setFormData({
-    saleDate: '',
-    totalValue: '',
-  });
-}
 
   function formatCurrency(value) {
     return Number(value || 0).toLocaleString('pt-BR', {
@@ -220,7 +260,7 @@ function cancelEdit() {
       </div>
 
       <section className="dashboard-panel">
-        <h2>Registrar venda do dia</h2>
+        <h2>{editingSaleId ? 'Editar venda do dia' : 'Registrar venda do dia'}</h2>
 
         {editingSaleId && (
           <p className="edit-alert">
@@ -256,15 +296,19 @@ function cancelEdit() {
           </div>
 
           <div className="form-actions">
-            <button type="submit" className="button button--primary">
-              {editingSaleId ? 'Salvar alteração' : 'Salvar venda do dia'}
+            <button type="submit" className="button button--primary" disabled={saving}>
+              {saving
+                ? 'Salvando...'
+                : editingSaleId
+                  ? 'Salvar alteração'
+                  : 'Salvar venda do dia'}
             </button>
 
             {editingSaleId && (
               <button
                 type="button"
                 className="button button--secondary"
-                onClick={cancelEdit}
+                onClick={resetForm}
               >
                 Cancelar edição
               </button>
@@ -276,96 +320,105 @@ function cancelEdit() {
       <section className="dashboard-panel">
         <h2>Relatório de vendas</h2>
 
-        <div className="sales-accordion">
-          {salesByYear.map((yearGroup) => {
-            const isYearOpen = expandedYears.includes(yearGroup.year);
+        {loading ? (
+          <p>Carregando vendas...</p>
+        ) : (
+          <div className="sales-accordion">
+            {salesByYear.map((yearGroup) => {
+              const isYearOpen = expandedYears.includes(yearGroup.year);
 
-            return (
-              <div className="sales-year" key={yearGroup.year}>
-                <button
-                  type="button"
-                  className="sales-row sales-row--year"
-                  onClick={() => toggleYear(yearGroup.year)}
-                >
-                  <span>
-                    {isYearOpen ? '▼' : '▶'} {yearGroup.year}
-                  </span>
+              return (
+                <div className="sales-year" key={yearGroup.year}>
+                  <button
+                    type="button"
+                    className="sales-row sales-row--year"
+                    onClick={() => toggleYear(yearGroup.year)}
+                  >
+                    <span>
+                      {isYearOpen ? '▼' : '▶'} {yearGroup.year}
+                    </span>
 
-                  <strong>Total anual: {formatCurrency(yearGroup.total)}</strong>
-                </button>
+                    <strong>Total anual: {formatCurrency(yearGroup.total)}</strong>
+                  </button>
 
-                {isYearOpen && (
-                  <div className="sales-months">
-                    {yearGroup.months.map((monthGroup) => {
-                      const monthKey = `${yearGroup.year}-${monthGroup.month}`;
-                      const isMonthOpen = expandedMonths.includes(monthKey);
+                  {isYearOpen && (
+                    <div className="sales-months">
+                      {yearGroup.months.map((monthGroup) => {
+                        const monthKey = `${yearGroup.year}-${monthGroup.month}`;
+                        const isMonthOpen = expandedMonths.includes(monthKey);
 
-                      return (
-                        <div className="sales-month" key={monthKey}>
-                          <button
-                            type="button"
-                            className="sales-row sales-row--month"
-                            onClick={() =>
-                              toggleMonth(yearGroup.year, monthGroup.month)
-                            }
-                          >
-                            <span>
-                              {isMonthOpen ? '▼' : '▶'} {monthGroup.name}
-                            </span>
+                        return (
+                          <div className="sales-month" key={monthKey}>
+                            <button
+                              type="button"
+                              className="sales-row sales-row--month"
+                              onClick={() =>
+                                toggleMonth(yearGroup.year, monthGroup.month)
+                              }
+                            >
+                              <span>
+                                {isMonthOpen ? '▼' : '▶'} {monthGroup.name}
+                              </span>
 
-                            <strong>
-                              Total mensal: {formatCurrency(monthGroup.total)}
-                            </strong>
-                          </button>
+                              <strong>
+                                Total mensal: {formatCurrency(monthGroup.total)}
+                              </strong>
+                            </button>
 
-                          {isMonthOpen && (
-                            <div className="sales-days">
-                              {monthGroup.days.length > 0 ? (
-                                monthGroup.days.map((sale) => (
-                                  <div className="sales-row sales-row--day" key={sale.id}>
-                                    <span>{formatDate(sale.saleDate)}</span>
+                            {isMonthOpen && (
+                              <div className="sales-days">
+                                {monthGroup.days.length > 0 ? (
+                                  monthGroup.days.map((sale) => (
+                                    <div
+                                      className="sales-row sales-row--day"
+                                      key={sale.id}
+                                    >
+                                      <span>{formatDate(sale.saleDate)}</span>
 
-                                    <div className="sales-day-actions">
-                                      <strong>{formatCurrency(sale.totalValue)}</strong>
+                                      <div className="sales-day-actions">
+                                        <strong>
+                                          {formatCurrency(sale.totalValue)}
+                                        </strong>
 
-                                      <button
-                                        type="button"
-                                        className="table-action"
-                                        onClick={() => startEditSale(sale)}
-                                      >
-                                        Editar
-                                      </button>
+                                        <button
+                                          type="button"
+                                          className="table-action"
+                                          onClick={() => startEditSale(sale)}
+                                        >
+                                          Editar
+                                        </button>
 
-                                      <button
-                                        type="button"
-                                        className="table-action table-action--danger"
-                                        onClick={() => deleteSale(sale.id)}
-                                      >
-                                        Apagar
-                                      </button>
+                                        <button
+                                          type="button"
+                                          className="table-action table-action--danger"
+                                          onClick={() => deleteSale(sale.id)}
+                                        >
+                                          Apagar
+                                        </button>
+                                      </div>
                                     </div>
+                                  ))
+                                ) : (
+                                  <div className="sales-empty">
+                                    Nenhuma venda registrada neste mês.
                                   </div>
-                                ))
-                              ) : (
-                                <div className="sales-empty">
-                                  Nenhuma venda registrada neste mês.
-                                </div>
-                              )}
-                            </div>
-                          )}
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            );
-          })}
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
 
-          {salesByYear.length === 0 && (
-            <div className="sales-empty">Nenhuma venda registrada ainda.</div>
-          )}
-        </div>
+            {salesByYear.length === 0 && (
+              <div className="sales-empty">Nenhuma venda registrada ainda.</div>
+            )}
+          </div>
+        )}
       </section>
     </div>
   );
