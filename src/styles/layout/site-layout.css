@@ -1,11 +1,11 @@
 .header {
   position: sticky;
   top: 0;
-  z-index: 10;
-  background: var(--color-white);
-  border-bottom: 1px solid #e8e8e8;
+  z-index: 1000;
+  backdrop-filter: blur(12px);
+  background: rgba(255,255,255,0.85);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
 }
-
 .header__content {
   min-height: 72px;
   display: flex;
@@ -14,9 +14,14 @@
 }
 
 .header__logo {
-  font-size: 1.2rem;
-  font-weight: 800;
-  color: var(--color-primary);
+  display: inline-flex;
+  align-items: center;
+}
+
+.header__logo img {
+  width: 90px;
+  height: auto;
+  display: block;
 }
 
 .header__nav {

@@ -1,90 +1,212 @@
 .hero {
-  padding: 96px 0;
-  background: linear-gradient(135deg, var(--color-primary-light), var(--color-white));
+  padding: 36px 0 72px;
+  background: linear-gradient(
+    180deg,
+    #fff3f5 0%,
+    #ffffff 100%
+  );
 }
 
-.hero__content {
-  display: grid;
-  grid-template-columns: 1.3fr 0.7fr;
-  gap: 48px;
-  align-items: center;
+.hero-banner {
+  position: relative;
+  min-height: 560px;
+  border-radius: 32px;
+  overflow: hidden;
+  border-color: #ffffff;
+}
+
+.hero-banner__image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  z-index: 1;
+}
+
+.hero-banner__overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(
+      90deg,
+      rgba(0, 0, 0, 0.78) 0%,
+      rgba(0, 0, 0, 0.58) 38%,
+      rgba(223, 9, 46, 0.24) 100%
+    );
+  z-index: 2;
+}
+
+.hero-banner__logo {
+  position: absolute;
+  left: 50%;
+  bottom: 1px;
+  transform: translateX(-50%);
+  width: 130px;
+  height: auto;
+  z-index: 4;
+}
+
+.hero-banner__content {
+  position: relative;
+  z-index: 3;
+  max-width: 650px;
+  padding: 86px 72px;
+  color: #ffffff;
+}
+
+.hero-banner__curve {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: -105px;
+  height: 160px;
+  background: #ffffff;
+  border-radius: 50% 50% 0 0;
+  z-index: 3;
 }
 
 .hero__tag {
-  display: inline-block;
-  margin-bottom: 14px;
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
   font-weight: 800;
-  color: var(--color-primary);
+  margin-bottom: 22px;
 }
 
 .hero h1 {
   max-width: 620px;
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(2.8rem, 5vw, 5rem);
   line-height: 0.95;
   margin-bottom: 24px;
+  color: #ffffff;
+  letter-spacing: -0.04em;
 }
 
 .hero p {
-  max-width: 620px;
-  font-size: 1.15rem;
-  line-height: 1.7;
-  color: #555;
+  max-width: 560px;
+  font-size: 1.12rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.88);
 }
 
-.hero__actions,
-.contact__actions {
-  margin-top: 32px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
+.hero__actions {
+  margin-top: 34px;
 }
 
-.hero__card {
-  padding: 32px;
-  border-radius: var(--radius-2xl);
-  background: var(--color-primary);
-  color: var(--color-white);
-  box-shadow: 0 20px 50px rgba(223, 9, 46, 0.22);
+.hero .button--secondary {
+  background: #ffffff;
+  color: var(--color-primary);
+  border-color: #ffffff;
 }
 
-.hero__card h2 {
-  margin-bottom: 12px;
-  font-size: 2rem;
-}
-
-.hero__card p {
-  color: rgba(255, 255, 255, 0.85);
+.hero-banner__curve {
+  position: absolute;
+  left: -5%;
+  right: -5%;
+  bottom: -90px;
+  height: 160px;
+  background: #ffffff;
+  border-radius: 50% 50% 0 0;
+  z-index: 3;
 }
 
 .location {
-  background: var(--color-white);
+  background: #ffffff;
 }
 
 .location__content {
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr;
-  gap: 32px;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 42px;
   align-items: center;
 }
 
-.location__map {
-  min-height: 320px;
-  border-radius: var(--radius-2xl);
-  background: var(--color-primary-light);
-  display: grid;
-  place-items: center;
+.location__info p {
+  margin-bottom: 28px;
+}
+
+.location__details {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: 28px 0 32px;
+}
+
+.location__detail {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 16px;
+  border-radius: 18px;
+  background: #fff3f5;
+}
+
+.location__detail svg {
   color: var(--color-primary);
-  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.location__detail strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #111111;
+}
+
+.location__detail span {
+  color: #666666;
+}
+
+.location__map {
+  min-height: 420px;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #fff3f5;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.08);
+}
+
+.location__map iframe {
+  width: 100%;
+  height: 420px;
+  border: 0;
+  display: block;
 }
 
 .contact {
-  text-align: center;
+  background: #fff3f5;
 }
 
 .contact__content {
-  max-width: 720px;
+  text-align: center;
+}
+
+.contact__content p {
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .contact__actions {
+  margin-top: 40px;
+
+  display: flex;
   justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.contact__actions .button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.contact__actions .button svg {
+  font-size: 1.1rem;
+  flex-shrink: 0;
 }
