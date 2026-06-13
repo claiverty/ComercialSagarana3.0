@@ -1,16 +1,14 @@
 @media (min-width: 1600px) {
+  .container {
+    width: min(1280px, calc(100% - 64px));
+  }
+
   .hero-banner {
     min-height: 620px;
   }
 
   .hero-banner__content {
     padding: 110px 90px;
-  }
-}
-
-@media (max-width: 1100px) {
-  .offers__grid {
-    grid-template-columns: repeat(4, 1fr);
   }
 }
 
@@ -22,6 +20,10 @@
   .hero-banner__content {
     max-width: 620px;
     padding: 72px 48px;
+  }
+
+  .offers__grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .location__content {
@@ -50,39 +52,16 @@
   .offers__grid {
     grid-template-columns: repeat(3, 1fr);
   }
-
-   .contact__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
 }
 
 @media (max-width: 820px) {
-  .header__content {
-    flex-direction: column;
-    padding: 18px 0;
-    gap: 16px;
-  }
-
-  .header__nav {
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 14px;
-  }
-
-  .footer__content {
+  .footer__content,
+  .footer__bottom {
     flex-direction: column;
     text-align: center;
   }
 
-    .footer__content, .footer__bottom {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footer__brand {
-    justify-content: center;
-  }
-
+  .footer__brand,
   .footer__social {
     justify-content: center;
   }
@@ -107,14 +86,14 @@
 }
 
 @media (max-width: 720px) {
-
   .dashboard-page__header {
     flex-direction: column;
     align-items: flex-start;
   }
 
   .stats-grid,
-  .form-row {
+  .form-row,
+  .financial-summary {
     grid-template-columns: 1fr;
   }
 
@@ -123,8 +102,8 @@
   }
 
   .sales-row {
-    align-items: flex-start;
     flex-direction: column;
+    align-items: flex-start;
   }
 
   .sales-row--month {
@@ -143,40 +122,41 @@
   .sales-day-actions {
     justify-content: flex-start;
   }
-
-  .financial-summary {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 640px) {
-.hero {
+  .container {
+    width: min(100% - 28px, 1120px);
+  }
+
+  .hero {
     padding: 16px 0 48px;
   }
 
   .hero-banner {
-    min-height: 560px;
+    min-height: 520px;
     border-radius: 20px;
   }
 
   .hero-banner__content {
-    padding: 52px 24px;
+    padding: 44px 24px;
   }
 
   .hero h1 {
-    font-size: clamp(2.4rem, 12vw, 3.6rem);
+    font-size: clamp(2.2rem, 12vw, 3.4rem);
   }
 
-  .hero__actions {
-    flex-direction: column;
+  .hero p {
+    font-size: 1rem;
   }
 
   .hero__actions .button {
     width: 100%;
   }
 
-   .hero-banner__logo {
-    bottom: -20px;
+  .hero-banner__logo {
+    bottom: 1px;
+    width: 100px;
   }
 
   .hero-banner__curve {
@@ -185,17 +165,32 @@
 
   .offers__grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  .offer-card {
-    padding: 14px;
+    gap: 14px;
   }
 
   .offer-card__image {
-    height: 130px;
+    height: 145px;
   }
 
-    .contact__actions {
+  .offer-card__content {
+    padding: 14px;
+  }
+
+  .offer-card h3 {
+    font-size: 0.9rem;
+  }
+
+  .offer-card strong {
+    font-size: 1.4rem;
+  }
+
+  .location__map,
+  .location__map iframe {
+    height: 320px;
+    min-height: 320px;
+  }
+
+  .contact__actions {
     flex-direction: column;
     align-items: center;
   }
@@ -206,7 +201,124 @@
 }
 
 @media (max-width: 420px) {
+  .container {
+    width: min(100% - 24px, 1120px);
+  }
+
+  .hero-banner {
+    min-height: 480px;
+  }
+
+  .hero-banner__content {
+    padding: 36px 18px;
+  }
+
+    .hero-banner__logo {
+    bottom: 1px;
+    width: 75px;
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 13vw, 3rem);
+  }
+
+  .section {
+    padding: 64px 0;
+  }
+
+  .section__header h2,
+  .location h2,
+  .contact h2 {
+    font-size: 2rem;
+  }
+
   .offers__grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .offer-card__image {
+    height: 120px;
+  }
+
+  .offer-card__content {
+    padding: 12px;
+  }
+
+  .offer-card h3 {
+    font-size: 0.82rem;
+  }
+
+  .offer-card strong {
+    font-size: 1.25rem;
+  }
+
+  .footer__brand {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .container {
+    width: min(100% - 20px, 1120px);
+  }
+
+  .hero-banner {
+    min-height: 460px;
+  }
+
+  .hero-banner__content {
+    padding: 32px 16px;
+  }
+
+  .hero__tag {
+    font-size: 0.78rem;
+    padding: 8px 12px;
+  }
+
+  .hero h1 {
+    font-size: 1.9rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+
+  .button {
+    min-height: 44px;
+    padding: 0 16px;
+    font-size: 0.9rem;
+  }
+
+  .section__header h2,
+  .location h2,
+  .contact h2 {
+    font-size: 1.8rem;
+  }
+
+  .offers__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .offer-card__image {
+    height: 105px;
+  }
+
+  .offer-card h3 {
+    font-size: 0.78rem;
+  }
+
+  .offer-card strong {
+    font-size: 1.1rem;
+  }
+
+  .location__detail {
+    padding: 14px;
+  }
+
+  .footer__links {
+    gap: 12px;
+    font-size: 0.85rem;
   }
 }

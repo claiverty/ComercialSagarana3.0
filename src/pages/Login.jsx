@@ -48,17 +48,29 @@ function Login() {
     <main className="login-page">
       <section className="login-card">
 
+        <img
+          src="/images/logo-sagarana.png"
+          alt="Comercial Sagarana"
+          className="login-logo"
+        />
+
         <span>Painel administrativo</span>
+
         <h1>Entrar</h1>
+
+        <p>
+          Acesse o painel e administrativo.
+        </p>
 
         <form className="dashboard-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="login">Usuário ou email</label>
+
             <input
               id="login"
               name="login"
               type="text"
-              placeholder="usario@email.com"
+              placeholder="Digite seu usuário ou email"
               value={formData.login}
               onChange={handleChange}
             />
@@ -66,6 +78,7 @@ function Login() {
 
           <div className="form-group">
             <label htmlFor="password">Senha</label>
+
             <input
               id="password"
               name="password"
@@ -76,7 +89,11 @@ function Login() {
             />
           </div>
 
-          <button type="submit" className="button button--primary" disabled={loading}>
+          <button
+            type="submit"
+            className="button button--primary"
+            disabled={loading}
+          >
             {loading ? 'Entrando...' : 'Entrar no painel'}
           </button>
         </form>
