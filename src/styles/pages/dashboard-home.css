@@ -1,10 +1,11 @@
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 18px;
 }
 
 .stat-card {
+  min-width: 0;
   padding: 24px;
   background: var(--color-white);
   border: 1px solid var(--color-border-dashboard);
@@ -22,8 +23,10 @@
 .stat-card strong {
   display: block;
   margin-bottom: 10px;
-  font-size: 2rem;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1.1;
   color: var(--color-primary);
+  white-space: nowrap;
 }
 
 .stat-card p {
@@ -31,13 +34,21 @@
   line-height: 1.5;
 }
 
+.financial-item,
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .financial-summary {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
 }
 
 .financial-item {
+  min-width: 0;
   padding: 20px;
   border-radius: var(--radius-lg);
   background: #f8f8f8;
@@ -52,6 +63,83 @@
 }
 
 .financial-item strong {
-  font-size: 1.15rem;
+  display: block;
+  margin-bottom: 10px;
+  font-size: clamp(1.25rem, 2vw, 2rem);
+  line-height: 1.1;
   color: var(--color-primary);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .stat-card {
+    padding: 16px;
+  }
+
+  .stat-card span {
+    font-size: 0.78rem;
+  }
+
+  .stat-card strong {
+    font-size: 1.15rem;
+  }
+
+  .stat-card p {
+    font-size: 0.78rem;
+  }
+
+  .financial-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .financial-item {
+    padding: 16px;
+  }
+
+  .financial-item span {
+    font-size: 0.78rem;
+  }
+
+  .financial-item strong {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .stats-grid,
+  .financial-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .stat-card {
+    padding: 14px;
+  }
+
+  .stat-card strong {
+    font-size: 1rem;
+  }
+
+.financial-item span {
+    font-size: 0.78rem;
+  }
+
+  .financial-item strong {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .stat-card strong {
+    font-size: 0.9rem;
+  }
+
+  .financial-item strong {
+    font-size: 0.9rem;
+  }
 }

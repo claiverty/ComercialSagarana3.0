@@ -65,38 +65,9 @@
   .footer__social {
     justify-content: center;
   }
-
-  .dashboard-layout {
-    height: auto;
-    min-height: 100vh;
-    grid-template-columns: 1fr;
-    overflow: visible;
-  }
-
-  .dashboard-sidebar {
-    height: auto;
-    position: static;
-    gap: 24px;
-  }
-
-  .dashboard-main {
-    height: auto;
-    overflow: visible;
-  }
 }
 
 @media (max-width: 720px) {
-  .dashboard-page__header {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .stats-grid,
-  .form-row,
-  .financial-summary {
-    grid-template-columns: 1fr;
-  }
-
   .dashboard-main {
     padding: 20px;
   }
@@ -213,7 +184,7 @@
     padding: 36px 18px;
   }
 
-    .hero-banner__logo {
+  .hero-banner__logo {
     bottom: 1px;
     width: 75px;
   }

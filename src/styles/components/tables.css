@@ -20,8 +20,11 @@
 }
 
 .status-badge {
+  width: fit-content;
   display: inline-flex;
-  padding: 6px 10px;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
   border-radius: var(--radius-full);
   background: var(--color-primary-light);
   color: var(--color-primary);

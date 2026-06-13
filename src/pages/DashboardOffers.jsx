@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Eye, EyeOff, Pencil, Trash2 } from 'lucide-react';
+
 import {
   createOffer,
   deleteOfferById,
@@ -17,6 +18,8 @@ function DashboardOffers() {
   const [imagePreview, setImagePreview] = useState('');
   const [editingOfferId, setEditingOfferId] = useState(null);
 
+  const formSectionRef = useRef(null);
+
   const [formData, setFormData] = useState({
     name: '',
     category: '',
@@ -25,7 +28,6 @@ function DashboardOffers() {
     description: '',
     imageUrl: '',
   });
-  const formSectionRef = useRef(null);
 
   useEffect(() => {
     loadOffers();
@@ -35,7 +37,7 @@ function DashboardOffers() {
     try {
       setLoading(true);
       const data = await getOffers();
-      setOffers(data);
+      setOffers(data || []);
     } catch (error) {
       console.error(error);
       alert('Erro ao carregar ofertas.');
@@ -56,9 +58,7 @@ function DashboardOffers() {
   function handleImageChange(event) {
     const file = event.target.files[0];
 
-    if (!file) {
-      return;
-    }
+    if (!file) return;
 
     const previewUrl = URL.createObjectURL(file);
 
@@ -97,7 +97,11 @@ function DashboardOffers() {
       };
 
       if (editingOfferId) {
-        const updatedOffer = await updateOffer(editingOfferId, offerPayload, imageFile);
+        const updatedOffer = await updateOffer(
+          editingOfferId,
+          offerPayload,
+          imageFile
+        );
 
         setOffers((currentOffers) =>
           currentOffers.map((offer) =>
@@ -106,7 +110,6 @@ function DashboardOffers() {
         );
       } else {
         const newOffer = await createOffer(offerPayload, imageFile);
-
         setOffers((currentOffers) => [newOffer, ...currentOffers]);
       }
 
@@ -158,10 +161,6 @@ function DashboardOffers() {
     }, 100);
   }
 
-  function cancelEditOffer() {
-    resetForm();
-  }
-
   async function toggleOfferStatus(offerId) {
     const selectedOffer = offers.find((offer) => offer.id === offerId);
 
@@ -206,9 +205,7 @@ function DashboardOffers() {
   }
 
   function formatPrice(value) {
-    if (!value) {
-      return '-';
-    }
+    if (!value) return '-';
 
     return Number(value).toLocaleString('pt-BR', {
       style: 'currency',
@@ -306,17 +303,6 @@ function DashboardOffers() {
             )}
           </div>
 
-          <div className="form-group">
-            <label htmlFor="description">Descrição</label>
-            <textarea
-              id="description"
-              name="description"
-              placeholder="Breve descrição da oferta"
-              value={formData.description}
-              onChange={handleChange}
-            />
-          </div>
-
           <div className="form-actions">
             <button type="submit" className="button button--primary" disabled={saving}>
               {saving
@@ -330,7 +316,7 @@ function DashboardOffers() {
               <button
                 type="button"
                 className="button button--secondary"
-                onClick={cancelEditOffer}
+                onClick={resetForm}
               >
                 Cancelar edição
               </button>
@@ -344,88 +330,74 @@ function DashboardOffers() {
 
         {loading ? (
           <p>Carregando ofertas...</p>
-        ) : (
-          <div className="dashboard-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Imagem</th>
-                  <th>Produto</th>
-                  <th>Categoria</th>
-                  <th>Preço antigo</th>
-                  <th>Preço atual</th>
-                  <th>Status</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
+        ) : offers.length > 0 ? (
+          <div className="dashboard-offers-list">
+            {offers.map((offer) => (
+              <article className="dashboard-offer-card" key={offer.id}>
+                <div className="dashboard-offer-card__image">
+                  {offer.image_url ? (
+                    <img src={offer.image_url} alt={offer.name} />
+                  ) : (
+                    <span>Sem imagem</span>
+                  )}
+                </div>
 
-              <tbody>
-                {offers.map((offer) => (
-                  <tr key={offer.id}>
-                    <td>
-                      {offer.image_url ? (
-                        <img
-                          src={offer.image_url}
-                          alt={offer.name}
-                          className="offer-thumb"
-                        />
-                      ) : (
-                        '-'
-                      )}
-                    </td>
-                    <td>{offer.name}</td>
-                    <td>{offer.category || '-'}</td>
-                    <td>{formatPrice(offer.old_price)}</td>
-                    <td>{formatPrice(offer.promo_price)}</td>
-                    <td>
-                      <span className="status-badge">
-                        {offer.active ? 'Ativa' : 'Inativa'}
-                      </span>
-                    </td>
-                    <td>
-                      <div className="table-actions">
-                        <button
-                          type="button"
-                          className="icon-action"
-                          title="Editar oferta"
-                          aria-label="Editar oferta"
-                          onClick={() => startEditOffer(offer)}
-                        >
-                          <Pencil size={18} />
-                        </button>
+                <div className="dashboard-offer-card__content">
+                  <div>
+                    <h3>{offer.name}</h3>
+                    <p>{offer.category || 'Sem categoria'}</p>
+                  </div>
 
-                        <button
-                          type="button"
-                          className="icon-action"
-                          title={offer.active ? 'Desativar oferta' : 'Ativar oferta'}
-                          aria-label={offer.active ? 'Desativar oferta' : 'Ativar oferta'}
-                          onClick={() => toggleOfferStatus(offer.id)}
-                        >
-                          {offer.active ? <EyeOff size={18} /> : <Eye size={18} />}
-                        </button>
+                  <div className="dashboard-offer-card__prices">
+                    <span>{formatPrice(offer.old_price)}</span>
+                    <strong>{formatPrice(offer.promo_price)}</strong>
+                  </div>
 
-                        <button
-                          type="button"
-                          className="icon-action icon-action--danger"
-                          title="Apagar oferta"
-                          aria-label="Apagar oferta"
-                          onClick={() => deleteOffer(offer.id)}
-                        >
-                          <Trash2 size={18} />
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
+                  <span
+                    className={`status-badge ${
+                      offer.active ? 'status-badge--active' : 'status-badge--inactive'
+                    }`}
+                  >
+                    {offer.active ? 'Ativa' : 'Inativa'}
+                  </span>
+                </div>
 
-                {offers.length === 0 && (
-                  <tr>
-                    <td colSpan="7">Nenhuma oferta cadastrada ainda.</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                <div className="table-actions">
+                  <button
+                    type="button"
+                    className="icon-action"
+                    title="Editar oferta"
+                    aria-label="Editar oferta"
+                    onClick={() => startEditOffer(offer)}
+                  >
+                    <Pencil size={18} />
+                  </button>
+
+                  <button
+                    type="button"
+                    className="icon-action"
+                    title={offer.active ? 'Desativar oferta' : 'Ativar oferta'}
+                    aria-label={offer.active ? 'Desativar oferta' : 'Ativar oferta'}
+                    onClick={() => toggleOfferStatus(offer.id)}
+                  >
+                    {offer.active ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
+
+                  <button
+                    type="button"
+                    className="icon-action icon-action--danger"
+                    title="Apagar oferta"
+                    aria-label="Apagar oferta"
+                    onClick={() => deleteOffer(offer.id)}
+                  >
+                    <Trash2 size={18} />
+                  </button>
+                </div>
+              </article>
+            ))}
           </div>
+        ) : (
+          <p>Nenhuma oferta cadastrada ainda.</p>
         )}
       </section>
     </div>
