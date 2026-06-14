@@ -142,21 +142,19 @@
     width: 92px;
   }
 
-.mobile-menu-button {
-  position: absolute;
-  right: 12px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 42px;
-  height: 42px;
-  border-radius: 12px;
-  background: transparent;
-  color: #111111;
-  z-index: 1003;
-}
-
-
+  .mobile-menu-button {
+    position: absolute;
+    right: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: transparent;
+    color: #111111;
+    z-index: 1003;
+  }
 
   .header__nav {
     position: fixed;
