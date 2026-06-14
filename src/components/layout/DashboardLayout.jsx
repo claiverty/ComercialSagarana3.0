@@ -45,7 +45,7 @@ function DashboardLayout() {
 
           <Link to="/dashboard/ofertas" onClick={closeMenu}>Ofertas</Link>
 
-          <Link to="/dashboard/vendas" onClick={closeMenu}>Vendas </Link>
+          <Link to="/dashboard/vendas" onClick={closeMenu}>Vendas</Link>
 
           <Link to="/" onClick={closeMenu}>Ver landing</Link>
 

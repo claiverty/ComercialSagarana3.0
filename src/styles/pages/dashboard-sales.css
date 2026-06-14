@@ -5,10 +5,10 @@
 }
 
 .sales-year {
-  border: 1px solid var(--color-border-sales);
-  border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--color-white);
+  border: 1px solid var(--color-border-sales);
+  border-radius: var(--radius-lg);
 }
 
 .sales-row {
@@ -22,17 +22,30 @@
   text-align: left;
 }
 
+.sales-row span {
+  font-weight: 800;
+}
+
+.sales-row strong {
+  white-space: nowrap;
+}
+
 .sales-row--year {
-  padding: 18px 20px;
-  background: var(--color-primary-light);
+  padding: 20px 24px;
+  background: #fff3f5;
   color: var(--color-primary);
   font-size: 1.05rem;
+  border-left: 5px solid var(--color-primary);
 }
 
 .sales-row--month {
   padding: 16px 20px 16px 44px;
-  background: var(--color-white);
+  background: #ffffff;
   border-top: 1px solid var(--color-border-soft);
+}
+
+.sales-row--month:hover {
+  background: #fafafa;
 }
 
 .sales-row--day {
@@ -41,12 +54,9 @@
   border-top: 1px solid var(--color-border-soft);
 }
 
-.sales-row span {
-  font-weight: 800;
-}
-
-.sales-row strong {
-  white-space: nowrap;
+.sales-row--day strong {
+  color: var(--color-primary);
+  font-size: 1.05rem;
 }
 
 .sales-empty {
@@ -60,6 +70,62 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  gap: 14px;
+  gap: 10px;
   flex-wrap: wrap;
+}
+
+@media (max-width: 720px) {
+  .sales-row--year,
+  .sales-row--month {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .sales-row--year {
+    padding: 18px;
+  }
+
+  .sales-row--month {
+    padding: 16px 18px 16px 28px;
+  }
+
+  .sales-row--day {
+    padding: 14px 16px 14px 32px;
+  }
+
+  .sales-empty {
+    padding: 14px 16px 14px 32px;
+  }
+
+  .sales-day-actions {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 420px) {
+  .sales-row strong {
+    white-space: normal;
+  }
+
+  .sales-row--year {
+    padding: 16px;
+  }
+
+  .sales-row--month {
+    padding: 14px 16px 14px 22px;
+  }
+
+  .sales-row--day {
+    padding: 14px 14px 14px 22px;
+  }
+
+  .sales-empty {
+    padding: 14px;
+  }
+
+  .sales-day-actions {
+    gap: 8px;
+  }
 }

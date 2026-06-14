@@ -272,7 +272,7 @@ function DashboardOffers() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="promoPrice">Preço promocional</label>
+              <label htmlFor="promoPrice">Preço novo</label>
               <input
                 id="promoPrice"
                 name="promoPrice"

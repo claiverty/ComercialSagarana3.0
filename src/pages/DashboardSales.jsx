@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Pencil, Trash2 } from 'lucide-react';
 
 import {
   createDailySale,
@@ -118,8 +119,7 @@ function DashboardSales() {
     }
 
     const alreadyExists = dailySales.some(
-      (sale) =>
-        sale.saleDate === formData.saleDate && sale.id !== editingSaleId
+      (sale) => sale.saleDate === formData.saleDate && sale.id !== editingSaleId
     );
 
     if (alreadyExists) {
@@ -282,7 +282,7 @@ function DashboardSales() {
             </div>
 
             <div className="form-group">
-              <label htmlFor="totalValue">Valor total do dia</label>
+              <label htmlFor="totalValue">Valor total</label>
               <input
                 id="totalValue"
                 name="totalValue"
@@ -334,10 +334,7 @@ function DashboardSales() {
                     className="sales-row sales-row--year"
                     onClick={() => toggleYear(yearGroup.year)}
                   >
-                    <span>
-                      {isYearOpen ? '▼' : '▶'} {yearGroup.year}
-                    </span>
-
+                    <span>{isYearOpen ? '▼' : '▶'} {yearGroup.year}</span>
                     <strong>Total anual: {formatCurrency(yearGroup.total)}</strong>
                   </button>
 
@@ -376,24 +373,26 @@ function DashboardSales() {
                                       <span>{formatDate(sale.saleDate)}</span>
 
                                       <div className="sales-day-actions">
-                                        <strong>
-                                          {formatCurrency(sale.totalValue)}
-                                        </strong>
+                                        <strong>{formatCurrency(sale.totalValue)}</strong>
 
                                         <button
                                           type="button"
-                                          className="table-action"
+                                          className="icon-action"
+                                          title="Editar venda"
+                                          aria-label="Editar venda"
                                           onClick={() => startEditSale(sale)}
                                         >
-                                          Editar
+                                          <Pencil size={18} />
                                         </button>
 
                                         <button
                                           type="button"
-                                          className="table-action table-action--danger"
+                                          className="icon-action icon-action--danger"
+                                          title="Apagar venda"
+                                          aria-label="Apagar venda"
                                           onClick={() => deleteSale(sale.id)}
                                         >
-                                          Apagar
+                                          <Trash2 size={18} />
                                         </button>
                                       </div>
                                     </div>
