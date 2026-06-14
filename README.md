@@ -1,16 +1,117 @@
-# React + Vite
+# Comercial Sagarana
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Landing page institucional e painel administrativo desenvolvidos para o Comercial Sagarana.
 
-Currently, two official plugins are available:
+O projeto permite divulgar promoções, facilitar o contato com clientes e realizar o controle interno de ofertas e vendas diárias através de um dashboard administrativo.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Funcionalidades
 
-## React Compiler
+### Landing Page
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+* Apresentação do estabelecimento
+* Seção de ofertas dinâmicas
+* Exibição automática apenas quando existirem ofertas ativas
+* Localização integrada ao Google Maps
+* Contato rápido via WhatsApp, telefone e Instagram
+* Design responsivo para desktop, tablet e mobile
+* SEO otimizado
 
-## Expanding the ESLint configuration
+### Painel Administrativo
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+#### Resumo Geral
+
+* Último fechamento
+* Faturamento do mês
+* Faturamento do ano
+* Resumo financeiro
+
+#### Gestão de Ofertas
+
+* Cadastro de ofertas
+* Upload de imagens
+* Edição de ofertas
+* Ativação e desativação
+* Exclusão de ofertas
+* Exibição automática na landing page
+
+#### Gestão de Vendas
+
+* Registro de vendas diárias
+* Edição de vendas
+* Exclusão de registros
+* Organização por:
+
+  * Ano
+  * Mês
+  * Dia
+* Totais anuais
+* Totais mensais
+* Valores diários
+
+## Tecnologias Utilizadas
+
+### Front-end
+
+* React
+* Vite
+* React Router DOM
+* CSS Modules (estrutura organizada por páginas e componentes)
+* Lucide React
+
+### Back-end
+
+* Supabase
+
+### Banco de Dados
+
+* PostgreSQL (Supabase)
+
+### Armazenamento
+
+* Supabase Storage
+
+## Configuração
+
+Clone o projeto:
+
+```bash
+git clone https://github.com/seu-usuario/comercial-sagarana.git
+```
+
+Instale as dependências:
+
+```bash
+npm install
+```
+
+Configure o arquivo `.env`:
+
+```env
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+```
+
+Execute o projeto:
+
+```bash
+npm run dev
+```
+
+Build de produção:
+
+```bash
+npm run build
+```
+
+## Responsividade
+
+O projeto foi desenvolvido para:
+
+* Desktop
+* Notebook
+* Tablet
+* Smartphones
+
+## Autor
+
+Desenvolvido por Claiverty Rodrigues.
