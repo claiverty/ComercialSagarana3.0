@@ -70,39 +70,6 @@ O projeto permite divulgar promoções, facilitar o contato com clientes e reali
 
 * Supabase Storage
 
-## Configuração
-
-Clone o projeto:
-
-```bash
-git clone https://github.com/seu-usuario/comercial-sagarana.git
-```
-
-Instale as dependências:
-
-```bash
-npm install
-```
-
-Configure o arquivo `.env`:
-
-```env
-VITE_SUPABASE_URL=
-VITE_SUPABASE_ANON_KEY=
-```
-
-Execute o projeto:
-
-```bash
-npm run dev
-```
-
-Build de produção:
-
-```bash
-npm run build
-```
-
 ## Responsividade
 
 O projeto foi desenvolvido para:
